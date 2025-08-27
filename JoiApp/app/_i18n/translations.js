@@ -145,7 +145,7 @@ const resources = {
         submit: 'Submit',
         privacyBanner:
           'Camera footage is not stored. Only the necessary mental health information, analyzed in real time, is encrypted and securely transmitted to the server. We prioritize your privacy above all else.',
-        headerTitle: 'Workplace Wellness Survey',
+        headerTitle: 'Mental Wellness AI Care',
         headerSubtitle: 'Question {{n}} of {{total}}',
         progress: '{{p}}% Complete',
         cameraNeeded: 'Camera permission is required to show the preview.',
@@ -545,7 +545,7 @@ const resources = {
         submit: '제출',
         privacyBanner:
           '카메라 영상은 저장되지 않습니다. 실시간으로 분석된 필요한 정신 건강 정보만 암호화되어 안전하게 서버로 전송됩니다. 우리는 무엇보다도 사용자의 프라이버시를 최우선으로 합니다.',
-        headerTitle: '직장 웰니스 설문',
+        headerTitle: '멘탈 웰니스 AI 케어',
         headerSubtitle: '{{n}} / {{total}} 문항',
         progress: '{{p}}% 완료',
         cameraNeeded: '미리보기를 위해 카메라 권한이 필요합니다.',
