@@ -1,4 +1,3 @@
-// app/screens/Survey/JoiQuestionnaire.js
 import React, { useRef, useState } from 'react';
 import {
   View,
@@ -12,6 +11,7 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
+import { useRouter } from 'expo-router';
 import styles from './JoiQuestionnaire.styles';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { useTranslation } from 'react-i18next';
@@ -20,6 +20,7 @@ const { width } = Dimensions.get('window');
 const CAMERA_HEIGHT = 220; // adjust as needed
 
 const JoiQuestionnaire = () => {
+  const router = useRouter(); // Make sure this is at the top with other hooks
   const { t } = useTranslation();
 
   // ----- Camera permission -----
@@ -55,7 +56,7 @@ const JoiQuestionnaire = () => {
         { value: 'A', text: t('survey.q1.A', { defaultValue: 'Never feel that way' }) },
         { value: 'B', text: t('survey.q1.B', { defaultValue: 'Occasionally (once or twice a month)' }) },
         { value: 'C', text: t('survey.q1.C', { defaultValue: 'Sometimes (about once a week)' }) },
-        { value: 'D', text: t('survey.q1.D', { defaultValue: 'Often (2–3 times a week)' }) },
+        { value: 'D', text: t('survey.q1.D', { defaultValue: 'Often (2â€"3 times a week)' }) },
         { value: 'E', text: t('survey.q1.E', { defaultValue: 'Always (almost daily)' }) },
       ],
     },
@@ -89,14 +90,14 @@ const JoiQuestionnaire = () => {
     {
       id: 4,
       text: t('survey.q4.text', {
-        defaultValue: 'What do you usually tell yourself when you’re struggling at work?',
+        defaultValue: 'What do you usually tell yourself when youâ€™re struggling at work?',
       }),
       options: [
         { value: 'A', text: t('survey.q4.A', { defaultValue: 'No real worry here' }) },
-        { value: 'B', text: t('survey.q4.B', { defaultValue: 'There’s worry but I can handle it' }) },
+        { value: 'B', text: t('survey.q4.B', { defaultValue: 'Thereâ€™s worry but I can handle it' }) },
         { value: 'C', text: t('survey.q4.C', { defaultValue: 'Push through a bit more, then focus' }) },
-        { value: 'D', text: t('survey.q4.D', { defaultValue: 'Hard to focus; I’m slipping' }) },
-        { value: 'E', text: t('survey.q4.E', { defaultValue: 'It’s unavoidable; I’m overwhelmed' }) },
+        { value: 'D', text: t('survey.q4.D', { defaultValue: 'Hard to focus; Iâ€™m slipping' }) },
+        { value: 'E', text: t('survey.q4.E', { defaultValue: 'Itâ€™s unavoidable; Iâ€™m overwhelmed' }) },
       ],
     },
     {
@@ -120,7 +121,7 @@ const JoiQuestionnaire = () => {
       options: [
         { value: 'A', text: t('survey.q6.A', { defaultValue: 'Fulfilled and satisfied' }) },
         { value: 'B', text: t('survey.q6.B', { defaultValue: 'Down at times but bounce back quickly' }) },
-        { value: 'C', text: t('survey.q6.C', { defaultValue: 'Down 2–3 times a week' }) },
+        { value: 'C', text: t('survey.q6.C', { defaultValue: 'Down 2â€"3 times a week' }) },
         { value: 'D', text: t('survey.q6.D', { defaultValue: 'Often down or pressured' }) },
         { value: 'E', text: t('survey.q6.E', { defaultValue: 'Consistently down' }) },
       ],
@@ -132,9 +133,9 @@ const JoiQuestionnaire = () => {
       }),
       options: [
         { value: 'A', text: t('survey.q7.A', { defaultValue: '0 days' }) },
-        { value: 'B', text: t('survey.q7.B', { defaultValue: '1–2 days' }) },
-        { value: 'C', text: t('survey.q7.C', { defaultValue: '3–4 days' }) },
-        { value: 'D', text: t('survey.q7.D', { defaultValue: '5–6 days' }) },
+        { value: 'B', text: t('survey.q7.B', { defaultValue: '1â€"2 days' }) },
+        { value: 'C', text: t('survey.q7.C', { defaultValue: '3â€"4 days' }) },
+        { value: 'D', text: t('survey.q7.D', { defaultValue: '5â€"6 days' }) },
         { value: 'E', text: t('survey.q7.E', { defaultValue: 'Almost every day' }) },
       ],
     },
@@ -148,7 +149,7 @@ const JoiQuestionnaire = () => {
         { value: 'B', text: t('survey.q8.B', { defaultValue: 'Somewhat tired but manageable' }) },
         { value: 'C', text: t('survey.q8.C', { defaultValue: 'Often tired; need breaks' }) },
         { value: 'D', text: t('survey.q8.D', { defaultValue: 'Usually tired; concentration is hard' }) },
-        { value: 'E', text: t('survey.q8.E', { defaultValue: 'Burned out; can’t perform' }) },
+        { value: 'E', text: t('survey.q8.E', { defaultValue: 'Burned out; canâ€™t perform' }) },
       ],
     },
     {
@@ -174,7 +175,7 @@ const JoiQuestionnaire = () => {
         { value: 'B', text: t('survey.q10.B', { defaultValue: 'Sometimes switch off; mostly rest' }) },
         { value: 'C', text: t('survey.q10.C', { defaultValue: 'Often keep thinking about work' }) },
         { value: 'D', text: t('survey.q10.D', { defaultValue: 'Immediately worry about work again' }) },
-        { value: 'E', text: t('survey.q10.E', { defaultValue: 'Always “ON”; can’t escape' }) },
+        { value: 'E', text: t('survey.q10.E', { defaultValue: 'Always â€œONâ€; canâ€™t escape' }) },
       ],
     },
     {
@@ -184,16 +185,16 @@ const JoiQuestionnaire = () => {
       }),
       options: [
         { value: 'A', text: t('survey.q11.A', { defaultValue: 'Never' }) },
-        { value: 'B', text: t('survey.q11.B', { defaultValue: 'Rarely (1–2×/month)' }) },
-        { value: 'C', text: t('survey.q11.C', { defaultValue: 'Sometimes (~1×/week)' }) },
-        { value: 'D', text: t('survey.q11.D', { defaultValue: 'Often (2–3×/week)' }) },
+        { value: 'B', text: t('survey.q11.B', { defaultValue: 'Rarely (1â€"2Ã—/month)' }) },
+        { value: 'C', text: t('survey.q11.C', { defaultValue: 'Sometimes (~1Ã—/week)' }) },
+        { value: 'D', text: t('survey.q11.D', { defaultValue: 'Often (2â€"3Ã—/week)' }) },
         { value: 'E', text: t('survey.q11.E', { defaultValue: 'Always (most days)' }) },
       ],
     },
     {
       id: 12,
       text: t('survey.q12.text', {
-        defaultValue: 'How is your current work–life balance?',
+        defaultValue: 'How is your current workâ€"life balance?',
       }),
       options: [
         { value: 'A', text: t('survey.q12.A', { defaultValue: 'Good balance; plenty of personal time' }) },
@@ -246,7 +247,7 @@ const JoiQuestionnaire = () => {
     {
       id: 16,
       text: t('survey.q16.text', {
-        defaultValue: 'When a difficult problem hits, what’s the immediate impact?',
+        defaultValue: 'When a difficult problem hits, whatâ€™s the immediate impact?',
       }),
       options: [
         { value: 'A', text: t('survey.q16.A', { defaultValue: 'No real impact' }) },
@@ -291,7 +292,7 @@ const JoiQuestionnaire = () => {
       }),
       options: [
         { value: 'A', text: t('survey.q19.A', { defaultValue: 'Never' }) },
-        { value: 'B', text: t('survey.q19.B', { defaultValue: 'Rarely (1–2×)' }) },
+        { value: 'B', text: t('survey.q19.B', { defaultValue: 'Rarely (1â€"2Ã—)' }) },
         { value: 'C', text: t('survey.q19.C', { defaultValue: 'Sometimes (~monthly)' }) },
         { value: 'D', text: t('survey.q19.D', { defaultValue: 'Often (weekly)' }) },
         { value: 'E', text: t('survey.q19.E', { defaultValue: 'Always (daily or almost daily)' }) },
@@ -364,16 +365,14 @@ const JoiQuestionnaire = () => {
 
   const handleSurveyComplete = (finalAnswers) => {
     const results = calculateResults(finalAnswers);
-    Alert.alert(
-      t('survey.completeTitle', { defaultValue: 'Survey Complete! 🎉' }),
-      t('survey.completeMsg', {
-        defaultValue:
-          'Thanks for completing the wellness survey.\n\nYour results:\n• Stress Level: {{level}}\n• Recommendation: {{rec}}',
-        level: results.stressLevel,
-        rec: results.recommendations,
-      }),
-      [{ text: t('common.confirm', { defaultValue: 'OK' }) }],
-    );
+    
+    // Navigate to Result page instead of showing Alert
+    router.push({
+      pathname: "/Result",
+      params: {
+        results: JSON.stringify(results)
+      }
+    });
   };
 
   const calculateResults = (surveyAnswers) => {
@@ -416,7 +415,7 @@ const JoiQuestionnaire = () => {
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>
-          {t('survey.headerTitle', { defaultValue: 'Workplace Wellness Survey' })}
+          {t('survey.headerTitle', { defaultValue: 'Mental Wellness AI Care' })} {/* Updated text here */}
         </Text>
         <Text style={styles.headerSubtitle}>
           {t('survey.headerSubtitle', {
@@ -538,17 +537,20 @@ const JoiQuestionnaire = () => {
 
       {/* Navigation */}
       <View style={styles.navigationContainer}>
-        {currentQuestionIndex > 0 && (
+        {currentQuestionIndex > 0 ? (
           <TouchableOpacity
             style={[styles.navButton, styles.prevButton]}
             onPress={handlePrevious}
             activeOpacity={0.8}
           >
             <Text style={styles.prevButtonText}>
-              {t('common.back', { defaultValue: '← Previous' })}
+              {t('common.back', { defaultValue: 'â† Previous' })}
             </Text>
           </TouchableOpacity>
+        ) : (
+          <View style={[styles.navButton, { opacity: 0 }]} />
         )}
+        
         <TouchableOpacity
           style={[styles.navButton, styles.nextButton, !selectedOption && styles.nextButtonDisabled]}
           onPress={handleNext}

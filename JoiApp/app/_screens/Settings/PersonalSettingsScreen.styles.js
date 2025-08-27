@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 20,
     borderWidth: 2,
-    borderColor: '#000000',
+    borderColor: '#007AFF', // changed from black to app blue
     overflow: 'hidden',
   },
   header: {
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   scrollContent: {
-  paddingBottom: 40,
+    paddingBottom: 40,
   },
 });
 

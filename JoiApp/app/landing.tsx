@@ -7,7 +7,7 @@ import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  Platform,
+  Image,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -16,7 +16,6 @@ export default function Landing() {
   const router = useRouter();
 
   const startOnboarding = async () => {
-    // ensure flags allow onboarding to run
     await AsyncStorage.multiRemove(['hasOnboarded', 'privacyConsent', 'baselineDone']);
     router.replace('/onboarding' as any);
   };
@@ -30,53 +29,41 @@ export default function Landing() {
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
-        {/* Logo / icon bubble */}
-        <View style={styles.logoCircle}>
-          <Text style={styles.logoEmoji}>🤍</Text>
-        </View>
+        {/* Logo */}
+        <Image
+          source={require('./assets/apple-touch-icon.png')}
+          style={styles.logo}
+          resizeMode="contain"
+        />
 
-        {/* Headline + sub */}
+        {/* Headline + subheadline */}
         <Text style={styles.title}>Joi App</Text>
         <Text style={styles.subtitle}>
           AI-driven emotional wellness with Metaverse action
         </Text>
 
-        {/* Feature blips */}
-        <View style={styles.features}>
-          <Feature tag="Multimodal tracking" />
-          <Feature tag="AI insights" />
-          <Feature tag="Personalized actions" />
-        </View>
-
-        {/* CTAs */}
-        <TouchableOpacity style={styles.primaryBtn} onPress={startOnboarding}>
+        {/* Primary CTA */}
+        <TouchableOpacity style={styles.primaryBtn} onPress={startOnboarding} activeOpacity={0.9}>
           <Text style={styles.primaryText}>Get Started</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.secondaryBtn} onPress={goLogin}>
+        {/* Secondary CTA */}
+        <TouchableOpacity style={styles.secondaryBtn} onPress={goLogin} activeOpacity={0.9}>
           <Text style={styles.secondaryText}>I already have an account</Text>
         </TouchableOpacity>
 
-        {/* Footer space */}
         <View style={{ height: 24 }} />
       </ScrollView>
     </SafeAreaView>
   );
 }
 
-function Feature({ tag }: { tag: string }) {
-  return (
-    <View style={styles.chip}>
-      <View style={styles.dot} />
-      <Text style={styles.chipText}>{tag}</Text>
-    </View>
-  );
-}
+const BLUE = '#2563EB';
+const TEXT = '#111827';
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: '#FFFFFF' },
 
-  // centers everything vertically & horizontally on most phones
   container: {
     flexGrow: 1,
     paddingHorizontal: 24,
@@ -86,65 +73,32 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  logoCircle: {
-    width: 108,
-    height: 108,
-    borderRadius: 999,
-    backgroundColor: '#111827',
-    alignItems: 'center',
-    justifyContent: 'center',
+  // no white background, just the image with rounded edges
+  logo: {
+    width: 128,
+    height: 128,
+    borderRadius: 32, // smooth corners
     marginBottom: 18,
-    shadowColor: '#000',
-    shadowOpacity: Platform.OS === 'ios' ? 0.15 : 0.25,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 6,
   },
-  logoEmoji: { fontSize: 34, color: 'white' },
 
   title: {
     fontSize: 36,
     fontWeight: '800',
-    color: '#111827',
+    color: TEXT,
     textAlign: 'center',
   },
   subtitle: {
-    marginTop: 8,
-    fontSize: 16,
-    lineHeight: 22,
-    color: '#6B7280',
+    marginTop: 10,
+    fontSize: 18,
+    lineHeight: 26,
+    color: '#4B5563',
     textAlign: 'center',
-    maxWidth: 340,
+    maxWidth: 360,
   },
-
-  features: {
-    marginTop: 20,
-    width: '100%',
-    gap: 10,
-    alignItems: 'center',
-  },
-  chip: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    backgroundColor: '#F3F4F6',
-    borderRadius: 14,
-    paddingVertical: 10,
-    paddingHorizontal: 14,
-    width: '100%',
-    maxWidth: 420,
-  },
-  dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 999,
-    backgroundColor: '#6366F1',
-  },
-  chipText: { color: '#111827', fontWeight: '600' },
 
   primaryBtn: {
-    marginTop: 26,
-    backgroundColor: '#111827',
+    marginTop: 30,
+    backgroundColor: BLUE,
     borderRadius: 18,
     paddingVertical: 16,
     paddingHorizontal: 18,
@@ -152,7 +106,7 @@ const styles = StyleSheet.create({
     width: '100%',
     maxWidth: 420,
   },
-  primaryText: { color: 'white', fontWeight: '800', fontSize: 18 },
+  primaryText: { color: '#FFFFFF', fontWeight: '800', fontSize: 18 },
 
   secondaryBtn: {
     marginTop: 14,
@@ -164,6 +118,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     maxWidth: 420,
+    backgroundColor: '#FFF',
   },
-  secondaryText: { color: '#111827', fontWeight: '700' },
+  secondaryText: { color: TEXT, fontWeight: '700' },
 });
