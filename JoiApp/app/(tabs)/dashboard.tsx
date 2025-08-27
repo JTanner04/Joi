@@ -1,7 +1,6 @@
 // app/(tabs)/dashboard.tsx
 import React, { useEffect, useState, useCallback } from 'react';
 import {
-  SafeAreaView,
   ScrollView,
   View,
   Text,
@@ -9,13 +8,16 @@ import {
   RefreshControl,
   StyleSheet,
   Platform,
+  Image,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Link } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function Dashboard() {
   const [lastPeriodic, setLastPeriodic] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
+  const insets = useSafeAreaInsets();
 
   const load = useCallback(async () => {
     const ts = await AsyncStorage.getItem('lastPeriodicAt');
@@ -43,7 +45,7 @@ export default function Dashboard() {
   };
 
   return (
-    <SafeAreaView style={styles.safe}>
+    <View style={[styles.safe, { paddingTop: Math.max(insets.top, Platform.OS === 'android' ? 12 : 0) }]}>
       <ScrollView
         contentContainerStyle={styles.container}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
@@ -51,9 +53,15 @@ export default function Dashboard() {
       >
         {/* Header */}
         <View style={styles.header}>
-          <View style={styles.logo}>
-            <Text style={styles.logoEmoji}>🤍</Text>
+          {/* Switch to the real logo */}
+          <View style={styles.logoWrap}>
+            <Image
+              source={require('../assets/apple-touch-icon.png')}
+              style={styles.logoImg}
+              resizeMode="cover"
+            />
           </View>
+
           <View style={{ flex: 1 }}>
             <Text style={styles.title}>Welcome back</Text>
             <Text style={styles.subTitle}>Here’s your emotional snapshot</Text>
@@ -81,7 +89,6 @@ export default function Dashboard() {
             Last completed: {prettyTime(lastPeriodic)}
           </Text>
 
-          {/* Use Link to avoid router typing issues */}
           <Link href="/periodic" asChild>
             <TouchableOpacity style={styles.primaryBtn}>
               <Text style={styles.primaryText}>Start</Text>
@@ -89,7 +96,7 @@ export default function Dashboard() {
           </Link>
         </View>
 
-        {/* Baseline entry only (opens JoiQuestionnaire in Survey tab) */}
+        {/* Baseline entry */}
         <View style={styles.row}>
           <Link href="/(tabs)/survey" asChild>
             <TouchableOpacity style={styles.secondaryBtn}>
@@ -100,7 +107,7 @@ export default function Dashboard() {
 
         <View style={{ height: 28 }} />
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -118,7 +125,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
     paddingBottom: 28,
-    paddingTop: 10,
+    paddingTop: 10, // content spacing (safe area handled above)
   },
 
   header: {
@@ -127,11 +134,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 16,
   },
-  logo: {
+
+  // Logo container (shadowed, no white box)
+  logoWrap: {
     width: 54,
     height: 54,
-    borderRadius: 999,
-    backgroundColor: '#111827',
+    borderRadius: 16,
+    overflow: 'hidden', // trims any square edges from the image
+    backgroundColor: '#111827', // subtle frame if PNG is transparent
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
@@ -140,7 +150,12 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 3 },
     elevation: 4,
   },
-  logoEmoji: { fontSize: 22, color: 'white' },
+  logoImg: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 16, // extra rounding in case PNG has square corners
+  },
+
   title: { fontSize: 24, fontWeight: '800', color: '#111827' },
   subTitle: { color: '#6B7280', marginTop: 2 },
 

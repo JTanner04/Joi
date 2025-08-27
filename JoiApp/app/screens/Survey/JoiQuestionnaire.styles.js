@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
   nextButtonTextDisabled: {
     color: '#657786',
   },
-    // --- Privacy Disclaimer ---
+  // --- Privacy Disclaimer ---
   privacyMessageContainer: {
     marginHorizontal: 20,
     marginBottom: 8,

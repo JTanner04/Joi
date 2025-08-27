@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  SafeAreaView,
-  ScrollView,
-} from 'react-native';
+import { View, Text, TouchableOpacity, SafeAreaView, Image } from 'react-native';
 import styles from './OnboardingScreen.styles';
 
 /**
@@ -15,9 +9,9 @@ import styles from './OnboardingScreen.styles';
 export default function OnboardingScreen({ onFinish }) {
   const [step, setStep] = useState(1); // 1 | 2
 
-  const StepPill = ({ label }) => (
-    <View style={styles.stepPill}>
-      <Text style={styles.stepPillText}>{label}</Text>
+  const ProgressBar = () => (
+    <View style={styles.progressTrack}>
+      <View style={[styles.progressFill, { width: step === 1 ? '50%' : '100%' }]} />
     </View>
   );
 
@@ -26,134 +20,113 @@ export default function OnboardingScreen({ onFinish }) {
       <View style={styles.featureEmojiWrap}>
         <Text style={styles.featureEmoji}>{emoji}</Text>
       </View>
-      <Text style={styles.featureTitle}>{title}</Text>
-      <Text style={styles.featureSubtitle}>{subtitle}</Text>
-    </View>
-  );
-
-  const ProgressBar = () => (
-    <View style={styles.progressTrack}>
-      <View
-        style={[
-          styles.progressFill,
-          { width: step === 1 ? '50%' : '100%' },
-        ]}
-      />
+      <Text style={styles.featureTitle} numberOfLines={1}>{title}</Text>
+      <Text style={styles.featureSubtitle} numberOfLines={2}>{subtitle}</Text>
     </View>
   );
 
   const renderStep1 = () => (
-    <ScrollView
-      contentContainerStyle={styles.scrollContent}
-      showsVerticalScrollIndicator={false}
-    >
+    <View style={styles.screenPad}>
       <ProgressBar />
-      <StepPill label="Step 1" />
-
-      {/* Identity / hero */}
+      {/* HERO */}
       <View style={styles.hero}>
-        <View style={styles.heroIcon}>
-          <Text style={styles.heroIconEmoji}>🤍</Text>
-        </View>
-        <Text style={styles.heroTitle}>Joi App</Text>
-        <Text style={styles.heroSubtitle}>
-          AI driven emotional wellness with Metaverse action
+        <Image
+          source={require('../../assets/apple-touch-icon.png')}
+          style={styles.logo}
+          resizeMode="cover"
+        />
+        <Text style={styles.heroTitle} numberOfLines={1}>Joi App</Text>
+        <Text style={styles.heroSubtitle} numberOfLines={2}>
+          AI driven emotional wellness with Metaverse
         </Text>
       </View>
 
-      {/* Feature cards */}
-      <FeatureCard
-        color="#EF4444"
-        emoji="❤️"
-        title="Multimodal Tracking"
-        subtitle="Capture emotions through facial recognition, voice analysis, text input, and structured surveys"
-      />
-      <FeatureCard
-        color="#3B82F6"
-        emoji="🧠"
-        title="AI Analysis"
-        subtitle="Advanced machine learning algorithms analyze patterns and provide emotional insights"
-      />
-      <FeatureCard
-        color="#10B981"
-        emoji="📈"
-        title="Personalized Recommendations"
-        subtitle="Receive tailored wellness activities and interventions based on your emotional state"
-      />
+      {/* Features */}
+      <View style={styles.featuresWrap}>
+        <FeatureCard
+          color="#EF4444"
+          emoji="❤️"
+          title="Multimodal Tracking"
+          subtitle="Face, voice, text, and structured surveys"
+        />
+        <FeatureCard
+          color="#3B82F6"
+          emoji="🧠"
+          title="AI Analysis"
+          subtitle="ML detects patterns and insights"
+        />
+        <FeatureCard
+          color="#10B981"
+          emoji="📈"
+          title="Personalized Recs"
+          subtitle="Tailored activities for your state"
+        />
+      </View>
 
       {/* CTA */}
       <TouchableOpacity style={styles.ctaPrimary} onPress={() => setStep(2)}>
-        <Text style={styles.ctaPrimaryText}>Get Started</Text>
+        <Text style={styles.ctaPrimaryText}>Continue</Text>
       </TouchableOpacity>
-      <View style={{ height: 20 }} />
-    </ScrollView>
+    </View>
   );
 
   const renderStep2 = () => (
-    <ScrollView
-      contentContainerStyle={styles.scrollContent}
-      showsVerticalScrollIndicator={false}
-    >
+    <View style={styles.screenPad}>
       <ProgressBar />
-      <StepPill label="Step 2 - Current" />
 
-      {/* Section title */}
-      <Text style={styles.sectionTitle}>Emotion Input Selection</Text>
-      <Text style={styles.sectionSubtitle}>
-        User chooses how they want to log their current emotional state
+      {/* Titles */}
+      <Text style={styles.sectionTitle} numberOfLines={1}>Emotion Input Selection</Text>
+      <Text style={styles.sectionSubtitle} numberOfLines={2}>
+        Choose how you want to log your current emotional state
       </Text>
 
-      {/* Input card */}
+      {/* Modern input card */}
       <View style={styles.inputCard}>
         <Text style={styles.inputQuestion}>How are you feeling?</Text>
         <Text style={styles.inputSub}>Choose your input method</Text>
 
-        {/* 2×2 grid */}
+        {/* 2×2 filled tiles (disabled) */}
         <View style={styles.inputGrid}>
-          <TouchableOpacity style={styles.inputButton}>
-            <Text style={styles.inputIcon}>📷</Text>
-            <Text style={styles.inputLabel}>Face</Text>
+          <TouchableOpacity style={[styles.tile, styles.tileDisabled]} disabled>
+            <View style={styles.tileIconWrap}><Text style={styles.tileIcon}>📷</Text></View>
+            <Text style={styles.tileLabel}>Face</Text>
+            <Text style={styles.tileHint}>Quick camera check-in</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.inputButton}>
-            <Text style={styles.inputIcon}>🎤</Text>
-            <Text style={styles.inputLabel}>Voice</Text>
+          <TouchableOpacity style={[styles.tile, styles.tileDisabled]} disabled>
+            <View style={styles.tileIconWrap}><Text style={styles.tileIcon}>🎤</Text></View>
+            <Text style={styles.tileLabel}>Voice</Text>
+            <Text style={styles.tileHint}>Talk it out</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.inputButton}>
-            <Text style={styles.inputIcon}>📝</Text>
-            <Text style={styles.inputLabel}>Text</Text>
+          <TouchableOpacity style={[styles.tile, styles.tileDisabled]} disabled>
+            <View style={styles.tileIconWrap}><Text style={styles.tileIcon}>📝</Text></View>
+            <Text style={styles.tileLabel}>Text</Text>
+            <Text style={styles.tileHint}>Type your mood</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.inputButton}>
-            <Text style={styles.inputIcon}>👤</Text>
-            <Text style={styles.inputLabel}>Survey</Text>
+          <TouchableOpacity style={[styles.tile, styles.tileDisabled]} disabled>
+            <View style={styles.tileIconWrap}><Text style={styles.tileIcon}>👤</Text></View>
+            <Text style={styles.tileLabel}>Survey</Text>
+            <Text style={styles.tileHint}>Guided questions</Text>
           </TouchableOpacity>
-        </View>
-
-        {/* emoji quick indicators (single row) */}
-        <View style={styles.emojiRow}>
-          <Text style={styles.emoji}>😊</Text>
-          <Text style={styles.emoji}>😐</Text>
-          <Text style={styles.emoji}>😞</Text>
         </View>
       </View>
 
-      {/* Key features list */}
+      {/* Key features */}
       <View style={styles.keyListWrap}>
         <Text style={styles.keyListTitle}>Key Features:</Text>
-        <Text style={styles.keyItem}>• Four input modalities available</Text>
-        <Text style={styles.keyItem}>• Quick emotion indicator icons</Text>
-        <Text style={styles.keyItem}>• Accessibility options for all users</Text>
-        <Text style={styles.keyItem}>• Multiple inputs can be combined</Text>
+        <Text style={styles.keyItem}>• Filled, modern tiles (no empty squares)</Text>
+        <Text style={styles.keyItem}>• Clean white card with soft shadow</Text>
+        <Text style={styles.keyItem}>• Consistent blue accent system</Text>
+        <Text style={styles.keyItem}>• Accessibility-friendly spacing</Text>
       </View>
 
       {/* Final CTA */}
       <TouchableOpacity style={styles.ctaPrimary} onPress={onFinish}>
-        <Text style={styles.ctaPrimaryText}>Continue</Text>
+        <Text style={styles.ctaPrimaryText}>Get Started</Text>
       </TouchableOpacity>
-      <View style={{ height: 20 }} />
-    </ScrollView>
+    </View>
   );
 
   return (
