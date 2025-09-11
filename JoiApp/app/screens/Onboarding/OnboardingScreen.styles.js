@@ -1,3 +1,4 @@
+// app/screens/Onboarding/OnboardingScreen.styles.js
 import { StyleSheet, Platform } from 'react-native';
 
 const shadow = Platform.select({
@@ -112,4 +113,51 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   ctaPrimaryText: { color: '#FFFFFF', fontSize: 16, fontWeight: '700' },
+
+  // NEW: Language selection styles
+  langWrap: {
+    marginTop: 8,
+    alignItems: 'center',
+    gap: 12,
+  },
+  langTitle: {
+    fontSize: 24,
+    fontWeight: '800',
+    color: '#111827',
+    textAlign: 'center',
+  },
+  langSubtitle: {
+    marginTop: 6,
+    fontSize: 15,
+    color: '#6B7280',
+    textAlign: 'center',
+    marginBottom: 18,
+  },
+  langOption: {
+    width: '100%',
+    maxWidth: 360,
+    borderWidth: 1,
+    borderColor: '#D1D5DB',
+    borderRadius: 14,
+    paddingVertical: 16,
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+  },
+  langOptionSelected: {
+    backgroundColor: '#2563EB',
+    borderColor: '#2563EB',
+  },
+  langOptionText: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#111827',
+  },
+  langOptionTextSelected: {
+    color: '#FFFFFF',
+  },
+  langHint: {
+    textAlign: 'center',
+    color: '#6B7280',
+    marginTop: 8,
+  },
 });
